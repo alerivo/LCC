@@ -13,9 +13,10 @@ que implementa la comunicacion con [gnuplot](http://www.gnuplot.info/) (también
 
 * Se lee el archivo y se procesan los datos.
 * Se disponen los nodos en una posicion al azar.
-* Se realizan iteraciones en las que en cada una se calcula la fuerza de atraccion de cada nodo (solamente con sus vecinos) y la fuerza de repulsion de cada nodo (con todos los nodos). Luego se ajusta cada nodo de acuerdo a las fuerzas de atraccion y repulsion, con un limite que esta dado por la temperatura.
-* Luego mediante gnuplot se grafica el grafo en pantalla.
-
+* Se realizan iteraciones en las que en cada una:
+ * Se calcula la fuerza de atraccion de cada nodo (solamente con sus vecinos) y la fuerza de repulsion de cada nodo (con todos los nodos).
+ * Se ajusta la posicion de cada nodo de acuerdo a las fuerzas de atraccion y repulsion, con un limite que esta dado por la temperatura.
+ * Se grafica el grafo en pantalla con gnuplot.
 
 En la primer mitad de las iteraciones la temperatura ira aumentando y en la segunda mitad esta ira bajando.
 
