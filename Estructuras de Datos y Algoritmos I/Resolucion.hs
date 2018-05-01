@@ -18,74 +18,35 @@ data NdTree p = Node (NdTree p) p (NdTree p) Int
 class Punto p where
     dimension :: p -> Int
     coord :: Int -> p -> Double
-    dist :: p -> p -> Double
-    dist p1 p2 =  sqrt (distAux ((dimension p1) -1) p1 p2)
-    ord :: Int -> (p -> p -> Ordering)
+    ord :: Int -> p -> p -> Ordering
+    ord n p1 p2 = compare (coord n p1) (coord n p2)
     cmp :: Int -> p -> (p -> Bool)
-    
-    
--- Ejercicio 1
--- Enunciado a
-
--- La funcion dist fue definida directamente al definir la clase Punto,
--- distAux es una funcion auxiliar de dist.
-
--- distAux Calcula el cuadrado de la distancia entre p1 y p2. Su primer
--- argumento es la dimension de p1 y p2 menos uno.
-distAux :: Punto p => Int -> p -> p -> Double
-distAux n p1 p2 | n == 0 = ((coord n p1) - (coord n p2) )^2 
-                | n > 0 = ((coord n p1) - (coord n p2) )^2 + distAux (n-1) p1 p2 
-                | otherwise = error "La dimension del Punto debe ser mayor a 0" 
-
+    cmp n p1 p2 = (ord n p1 p2) == GT || (ord n p1 p2) == EQ
+-- Ejercicio 1 - Enunciado a
+    dist :: p -> p -> Double
+    dist p1 p2 = sqrt (dist' (dimension p1 -1) p1 p2) where
+        dist' n p1 p2 | n == 0 = ((coord n p1) - (coord n p2) )^2 
+                        | n > 0  = ((coord n p1) - (coord n p2) )^2 + dist' (n-1) p1 p2 
+                        | otherwise = error "La dimension del Punto debe ser mayor a 0" 
 
 -- Enunciado b
 
-newtype Punto2d = P2d(Double, Double) deriving Show
-newtype Punto3d = P3d(Double,Double,Double) deriving Show
+newtype Punto2d = P2d(Double, Double) deriving (Show, Eq)
+newtype Punto3d = P3d(Double,Double,Double) deriving (Show, Eq)
 
 -- Se define Punto2d instancia de Punto
 instance Punto Punto2d where
     dimension p = 2
-    
     coord 0 (P2d (x,_)) = x
     coord 1 (P2d (_,y)) = y
-    coord _ _ = error "La coordenada es 0 o 1"
     
-    ord 0 (P2d (x,_)) (P2d (y,_)) = compare x y
-    ord 1 (P2d (_,x)) (P2d (_,y)) = compare x y
-    ord _ _ _ = error "Punto de dos dimensiones, se puede ordenar solo con componente 0 o 1"
-    
-    cmp 0 (P2d (x,_)) (P2d (y,_)) = x >= y
-    cmp 1 (P2d (_,x)) (P2d (_,y)) = x >= y
-    cmp _ _ _= error "Punto de dos dimensiones, solo se puede comparar la componente 0 o 1" 
-
--- Se define Punto2d instancia de Eq
-instance Eq Punto2d where
-    (==) (P2d (x1,y1)) (P2d (x2,y2))  = x1 == x2 && y1 == y2
-
 -- Se define Punto3d instancia de Punto
 instance Punto Punto3d where
     dimension p = 3
-    
     coord 0 (P3d (x,_,_)) = x
     coord 1 (P3d (_,y,_)) = y
     coord 2 (P3d (_,_,z)) = z
-    coord _ _ = error "La coordenada es 0, 1 o 2"
-    
-    ord 0 (P3d (x,_,_)) (P3d (y,_,_)) = compare x y
-    ord 1 (P3d (_,x,_)) (P3d (_,y,_)) = compare x y
-    ord 2 (P3d (_,_,x)) (P3d (_,_,y)) = compare x y
-    ord _ _ _ = error "Punto de tres dimensiones, se puede ordenar solo con componente 0, 1 o 2"
-    
-    cmp 0 (P3d (x,_,_)) (P3d (y,_,_)) = x >= y
-    cmp 1 (P3d (_,x,_)) (P3d (_,y,_)) = x >= y
-    cmp 2 (P3d (_,_,x)) (P3d (_,_,y)) = x >= y
-    cmp _ _ _ = error "Punto de tres dimensiones, solo se puede comparar la componente 0, 1 o 2"
 
--- Se define Punto3d instancia de Eq
-instance Eq Punto3d where
-    (==) (P3d (x1,y1,z1)) (P3d (x2,y2,z2))  = x1 == x2 && y1 == y2 && z1 == z2
-    
 -- Ejercicio 2
 
 fromList :: Punto p => [p] -> NdTree p
