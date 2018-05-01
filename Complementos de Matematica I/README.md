@@ -1,6 +1,6 @@
 # Graficador de grafos 
 
-Basado en el estudio realizado por Thomas M. J. Fruchterman y Edward M. Reingold en [Graph  Drawing  by  Force-directed  Placement](www.stat.cmu.edu/~brian/780/bibliography/00 layout and rendering/fruchterman-reingold.pdf).
+Basado en el estudio realizado por Thomas M. J. Fruchterman y Edward M. Reingold en [Graph  Drawing  by  Force-directed  Placement](http://www.stat.cmu.edu/~brian/780/bibliography/00%20layout%20and%20rendering/fruchterman-reingold.pdf).
 
 Este programa grafica un grafo representado en un archivo cuya primer linea es un entero N que es la
 cantidad de nodos, las proximas N lineas son los nombres de los nodos y las proximas 0 <= M lineas
