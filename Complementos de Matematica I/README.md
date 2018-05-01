@@ -26,6 +26,8 @@ En cada iteracion, una vez calculada la nueva posicion de todos los nodos, se gu
 
 El directorio grafos contiene varios grafos definidos para probar el programa, creados por Damian Ariel.
 
+Hay veces que el grafo no queda graficado de manera 'linda' y es necesario volver a correr el programa hasta obtener una version 'linda'. La forma en la que quedan dispuestos los nodos al principio (de manera al azar) influye en el resultado de la disposicion final.
+
 Para correr el programa basta con:
 * python2 GraficadorDeGrafos.py GRAFO
 
