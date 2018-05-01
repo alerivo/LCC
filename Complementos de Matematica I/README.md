@@ -9,30 +9,24 @@ son M aristas, que tienen la pinta x y, que significa que hay una arista entre x
 Esta hecho en Python2 y requiere [Gnuplot.py Python package](http://gnuplot-py.sourceforge.net/),
 que implementa la comunicacion con [gnuplot](http://www.gnuplot.info/) (también requerido). Gnuplot.py necesita [NumPy package](http://www.numpy.org/).
 
-El funcionamiento general del programa es:
+## Funcionamiento general del programa
 
-Se lee el archivo y se procesan los datos.
+* Se lee el archivo y se procesan los datos.
+* Se disponen los nodos en una posicion al azar.
+* Se realizan iteraciones en las que en cada una:
+  * Se calcula la fuerza de atraccion de cada nodo (solamente con sus vecinos) y la fuerza de repulsion de cada nodo (con todos los nodos).
+  * Se ajusta la posicion de cada nodo de acuerdo a las fuerzas de atraccion y repulsion, con un limite que esta dado por la temperatura.
+  * Se grafica el grafo en pantalla con gnuplot.
 
-Se disponen los nodos en una posicion al azar.
+En la primer mitad de las iteraciones la temperatura ira aumentando y en la segunda mitad esta ira bajando.
 
-Se realizan iteraciones en las que en cada una se calcula la fuerza
-de atraccion de cada nodo (solamente con sus vecinos) y la fuerza de
-repulsion de cada nodo (con todos los nodos). Luego se ajusta cada nodo
-de acuerdo a las fuerzas de atraccion y repulsion, con un limite que esta dado
-por la temperatura.
+Las temperaturas iniciales, las funciones enfriar y calentar y el valor por defecto de la constante C se obtuvieron de manera experimental.
 
-La primer mitad de las iteraciones la temperatura ira aumentando y en la segunda
-mitad esta ira banajando.
-
-Las temperaturas iniciales, las funciones enfriar y calentar y la constante C se obtuvieron de manera experimental.
-
-En cada iteracion, una vez calculada la nueva posicion de todos los nodos, se guarda
-en grafo.data la informacion de los nodos, su posicion y las aristas de manera
-tal que gnuplot los pueda interpretar.
-
-Luego mediante gnuplot se grafica el grafo en pantalla.
+En cada iteracion, una vez calculada la nueva posicion de todos los nodos, se guarda en grafo.data la informacion de los nodos, su posicion y las aristas de manera tal que gnuplot los pueda interpretar.
 
 El directorio grafos contiene varios grafos definidos para probar el programa, creados por Damian Ariel.
+
+Hay veces que el grafo no queda graficado de manera 'linda' y es necesario volver a correr el programa hasta obtener una version 'linda'. La forma en la que quedan dispuestos los nodos al principio (de manera al azar) influye en el resultado de la disposicion final.
 
 Para correr el programa basta con:
 * python2 GraficadorDeGrafos.py GRAFO
