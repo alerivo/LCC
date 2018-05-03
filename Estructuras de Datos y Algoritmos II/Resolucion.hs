@@ -22,7 +22,8 @@ class Punto p where
     ord n p1 p2 = compare (coord n p1) (coord n p2)
     cmp :: Int -> p -> (p -> Bool)
     cmp n p1 p2 = (ord n p1 p2) == GT || (ord n p1 p2) == EQ
--- Ejercicio 1 - Enunciado a
+-- Ejercicio 1
+-- Enunciado a
     dist :: p -> p -> Double
     dist p1 p2 = sqrt (dist' (dimension p1 -1) p1 p2) where
         dist' n p1 p2 | n == 0 = ((coord n p1) - (coord n p2) )^2 
@@ -31,16 +32,17 @@ class Punto p where
 
 -- Enunciado b
 
+-- Defino nuevos tipos de dato para puntos de 2 y 3 dimensiones.
 newtype Punto2d = P2d(Double, Double) deriving (Show, Eq)
 newtype Punto3d = P3d(Double,Double,Double) deriving (Show, Eq)
 
--- Se define Punto2d instancia de Punto
+-- Se define Punto2d instancia de la clase Punto
 instance Punto Punto2d where
     dimension p = 2
     coord 0 (P2d (x,_)) = x
     coord 1 (P2d (_,y)) = y
     
--- Se define Punto3d instancia de Punto
+-- Se define Punto3d instancia de la clase Punto
 instance Punto Punto3d where
     dimension p = 3
     coord 0 (P3d (x,_,_)) = x
@@ -49,6 +51,8 @@ instance Punto Punto3d where
 
 -- Ejercicio 2
 
+-- fromList toma una lista de Puntos y devuelve un NdTree (arbol binario
+-- de Puntos) con los puntos que estan en la lista. 
 fromList :: Punto p => [p] -> NdTree p
 fromList s = hacerArbol 0 s where
     hacerArbol _ []     = Empty
@@ -65,6 +69,7 @@ fromList s = hacerArbol 0 s where
 
 -- Ejercicio 3
 
+-- inserta un Punto en el NdTree, por mas que ya este agregado
 insertar :: Punto p => p -> NdTree p -> NdTree p
 insertar p t = agregarNodo 0 p t (dimension p) where
     agregarNodo n p Empty d = Node Empty p Empty n
@@ -100,7 +105,8 @@ maxNodo (Node lt x rt e) eje | eje == e = if rt == Empty
                                            in if cmp eje x maxambos
                                                   then x 
                                                   else maxambos
-                                                
+
+-- eliminar elimina la primer aparicion que encuentra en el NdTree del Punto pasado
 eliminar :: (Eq p,Punto p) => p -> NdTree p -> NdTree p
 eliminar p Empty = Empty
 eliminar p t@(Node lt x rt e) | x == p = if rt /= Empty
@@ -145,6 +151,8 @@ estaDentro (P2d (x,y)) rec = let minx = minxRect rec
                                  maxy = maxyRect rec
                              in (x>=minx && x<=maxx && y>=miny && y<=maxy)
 
+-- ortogonalSearch devuelve una lista de puntos con los puntos pertencientes
+-- al NdTree contenidos en en rectangulo pasado
 ortogonalSearch :: NdTree Punto2d -> Rect -> [Punto2d]
 ortogonalSearch Empty _ = []
 ortogonalSearch (Node lt p rt e) rec =
